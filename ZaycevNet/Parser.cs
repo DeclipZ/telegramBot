@@ -15,14 +15,12 @@ namespace ZaycevNet
 
         public Song getSong(string songName)
         {
-         
             string page = getHtmlPage("http://go.mail.ru/zaycev?q=" + songName);
  
             page = getInnerContent(page, "div", "zaycev__play");
             string url = getInnerOfAttribute(page, "href", "?autoplay");
 
             page = getHtmlPage(url);
-
       
             string performer = getInnerContent(page, "div", "musicset-track__artist");
             performer = getInnerContent(performer, "a");
@@ -37,12 +35,8 @@ namespace ZaycevNet
 
             WebRequest request = HttpWebRequest.Create(url);
             Stream stream = request.GetResponse().GetResponseStream();
-  //#
-            Song song = new Song();
-            song.Audio = stream;
-            song.Performer = performer;
-            song.Title = title;
-            song.Duration = duration;
+
+            Song song = new Song(performer, title, stream, duration);
             return song;
         }
 

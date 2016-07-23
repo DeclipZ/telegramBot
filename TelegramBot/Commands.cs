@@ -26,30 +26,28 @@ namespace TelegramBot
             try{
                 if (!message.StartsWith(Constants.COMMAND_CHAR)) { return; }
                 message = message.Substring(Constants.COMMAND_CHAR.Length);
+                int index = message.IndexOf("@" + Constants.BOT_ID);
+                if (index > 0)
+                    message = message.Replace("@" + Constants.BOT_ID, "");
                 if (message.StartsWith("help"))
-                {
                     commandHelp(chat, user);
-                }
                 if (message.StartsWith("about"))
-                {
                     commandAbout(chat, user);
-                }
                 if (message.StartsWith("music"))
                 {
-                    if (message.Length < 6)
+                    index = message.IndexOf(" ");
+                    if(index < 0)
                     {
                         Bot.SendTextMessageAsync(chat.Id,
                             "# MUSIC #\n\nUsage: /music <Song name>",
                             replyMarkup: hideKeyboard);
                         return;
                     }
-                    message = message.Substring(6);
+                    message = message.Substring(index + 1);
                     commandMusic(chat, message, user);
                 }
                 if (message.StartsWith("ping"))
-                {
                     commandPing(chat, user);
-                }
             }
             catch(Exception ex){
                 Console.WriteLine(ex);
@@ -72,23 +70,9 @@ namespace TelegramBot
         private void commandHelp(Chat chat, User user)
         {
             Console.WriteLine(user.Username + " used help command");
-            var keyboard = new ReplyKeyboardMarkup(new[]{
-                new[]{
-                    new KeyboardButton("/help"),
-                },
-                new[]{
-                    new KeyboardButton("/about"),
-                },
-                new[]{
-                    new KeyboardButton("/music"),
-                },
-                new[]{
-                    new KeyboardButton("/ping"),
-                },
-            });
             Bot.SendTextMessageAsync(chat.Id,
                 "# HELP #\n\nHere's a list of commands:\n/help - show list of commands\n/about - about bot and creator\n/music - request bot to search music\n/ping - get the server ping",
-                replyMarkup: keyboard);
+                replyMarkup: hideKeyboard);
         }
 
         private void commandAbout(Chat chat, User user)
@@ -106,15 +90,17 @@ namespace TelegramBot
             ZaycevNet.Song song = parser.getSong(songName);
             if (song == null)
             {
-                Bot.SendTextMessage(chat.Id,
-                    "# MUSIC #\n\nI\'m sorry, I can\'t find this song.\nTry to write in a different way.");
+                Bot.SendTextMessageAsync(chat.Id,
+                    "# MUSIC #\n\nI\'m sorry, I can\'t find this song.\nTry to write in a different way.",
+                    replyMarkup: hideKeyboard);
+                return;
             }
             FileToSend audio = new FileToSend();
             audio.Content = song.Audio;
             audio.Filename = song.Performer + " - " + song.Title;
             Bot.SendAudioAsync(chat.Id,
                 audio,
-                60,
+                song.Duration,
                 song.Performer,
                 song.Title,
                 replyMarkup: hideKeyboard);

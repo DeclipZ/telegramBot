@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TelegramBot
 {
-    class Constants
+    static class Constants
     {
-        public static string COMMAND_CHAR = "/";
-        public static string YOUTUBE_API_KEY = "AIzaSyDa-KfbDtzXVEKtJhI5UaJsvpMXFxpqvBc";
-        public static string BOT_API_KEY = "231109719:AAFXQybInZSX3seSMkLnZ9skv7CZBwWlxjE";
-        public static string BOT_VERSION = "0.1.1 alpha";
-        public static string BOT_CREATOR = "declipz";
-        public static string ROOT_DIRECTORY = "D:\\programs\\C#\\TelegramBot\\TelegramBot\\";
+        public const string COMMAND_CHAR = "/";
+        public const string BOT_API_KEY = "API_KEY";
+        public const string BOT_VERSION = "0.2.0 alpha";
+        public const string BOT_CREATOR = "declipz";
+        public const string BOT_ID = "MystBot";
+        public const string ROOT_DIRECTORY = "D:\\programs\\C#\\telegramBot\\TelegramBot\\";
     }
 }
