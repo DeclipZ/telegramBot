@@ -1,8 +1,5 @@
 ﻿using System;
-
-using System.IO;
 using System.Net.NetworkInformation;
-
 
 using Telegram.Bot;
 using Telegram.Bot.Types;
