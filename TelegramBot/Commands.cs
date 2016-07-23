@@ -78,7 +78,7 @@ namespace TelegramBot
         private void commandAbout(Chat chat, User user)
         {
             Console.WriteLine(user.Username + " used about command");
-            string textAbout = String.Format("# ABOUT #\n\nHello, my name is MysteriosBot. My creator is @{0}\nUse /help to get list of commands.\n\nBot version: {1}", Constants.BOT_CREATOR, Constants.BOT_VERSION);
+            string textAbout = String.Format("# ABOUT #\n\nHello, my name is {0}. My creator is @{1}\nUse /help to get list of commands.\n\nBot version: {2}", Constants.BOT_NAME, Constants.BOT_CREATOR, Constants.BOT_VERSION);
             Bot.SendTextMessageAsync(chat.Id,
                 textAbout,
                 replyMarkup: hideKeyboard);

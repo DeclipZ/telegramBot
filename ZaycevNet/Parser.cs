@@ -18,6 +18,7 @@ namespace ZaycevNet
             string page = getHtmlPage("http://go.mail.ru/zaycev?q=" + songName);
  
             page = getInnerContent(page, "div", "zaycev__play");
+            if (page == null) return null;
             string url = getInnerOfAttribute(page, "href", "?autoplay");
 
             page = getHtmlPage(url);
@@ -50,6 +51,7 @@ namespace ZaycevNet
             string closeTag = String.Format("</{0}>", tagName);
 
             int startIndex = webPage.IndexOf(openTag);
+            if (startIndex < 0) return null;
             int endIndex = webPage.IndexOf(">", startIndex);
             startIndex += endIndex - startIndex + 1;
 
